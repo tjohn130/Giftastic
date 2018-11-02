@@ -35,15 +35,18 @@ $(document).ready(function(){
                 for(var j=0;j<response.data.length;j++){
                     var imgsrcStill = response.data[j].images.original_still.url
                     var imgsrcAnimate = response.data[j].images.original.url
+                    var imgRating = response.data[j].rating
                     console.log(imgsrcStill)
                     console.log(imgsrcAnimate)
+                    var newp = $("<p>")
                     var newimg = $("<img>")
                     newimg.addClass("topicPicture")
                     .attr("src", imgsrcStill)
                     .attr("data-loop", false)
                     .attr("data-still", imgsrcStill)
                     .attr("data-animate",imgsrcAnimate);
-                    $("#picture").prepend(newimg);
+                    newp.append(newimg).append("Rating: "+imgRating);
+                    $("#picture").prepend(newp);
                 }
             })  
             
@@ -56,14 +59,16 @@ $(document).ready(function(){
         console.log(loopCheck)
         console.log(imgAnimate+imgStill)
         //Stop
-        if(loopCheck == false){
-            $(this).attr("src", imgAnimate);
-            console.log($(this).attr("src", imgAnimate))
-
-
+        if(loopCheck === "false"){
+            $(this).attr("src", imgAnimate)
+            .attr("data-loop", true);
+            console.log(loopCheck);
         }
-        
-        
+        else{
+            console.log(loopCheck);
+            $(this).attr("src", imgStill)
+            .attr("data-loop", false);
+        }
     })
 
 })
