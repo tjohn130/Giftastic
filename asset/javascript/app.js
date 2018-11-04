@@ -2,6 +2,7 @@ $(document).ready(function(){
     var topic = ["Bunny","Bears","Jojo","Nature","Anime","Food","Desserts","Candy","Movies","Spiderman","Parkour","Japan"]
 
     function pullButton(){
+        $("#button").empty();
         
         for(var i=0;i<topic.length;i++){
 
@@ -42,14 +43,32 @@ $(document).ready(function(){
                     var newimg = $("<img>")
                     newimg.addClass("topicPicture")
                     .attr("src", imgsrcStill)
+                    .attr("width","300px")
                     .attr("data-loop", false)
                     .attr("data-still", imgsrcStill)
                     .attr("data-animate",imgsrcAnimate);
-                    newp.append(newimg).append("Rating: "+imgRating);
+                    newp.append(newimg).append("<p class='text-center'> Rating: "+imgRating+"</p>");
                     $("#picture").prepend(newp);
                 }
             })  
             
+    })
+
+    $("button[type='submit']").click(function(e){
+        e.preventDefault()
+        var newquery = $("#addquery").val()
+        var newButton2 = $("<button>")
+        topic.push(newquery);
+        newButton2.addClass("topicButton")
+        .text(newquery);
+        $("#button").append(newButton2);
+        console.log(topic);
+
+        pullButton()
+    })
+
+    $("#refresh").click(function(){
+
     })
 
     $("#picture").on("click",".topicPicture",function(){
