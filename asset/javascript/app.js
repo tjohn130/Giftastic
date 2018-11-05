@@ -15,12 +15,15 @@ $(document).ready(function(){
         }
     }
 
+    
+
     pullButton();
 
     $(".topicButton").click(function(){
 
         var queryParam = {api_key: "19SOKo8StiKRg3T028H9ycDkZIe4Ssel"}
         queryParam.q = $(this).text();
+        console.log(queryParam.q);
         queryParam.limit = "10";
         queryParam.rating = "g";
         urlquery = "https://api.giphy.com/v1/gifs/search?"+$.param(queryParam);
@@ -29,16 +32,11 @@ $(document).ready(function(){
                 url: urlquery,
                 method: "GET",
             }).then(function(response){
-            
-                console.log(response)
-                console.log(response.data[0].source_tld)
 
                 for(var j=0;j<response.data.length;j++){
                     var imgsrcStill = response.data[j].images.original_still.url
                     var imgsrcAnimate = response.data[j].images.original.url
                     var imgRating = response.data[j].rating
-                    console.log(imgsrcStill)
-                    console.log(imgsrcAnimate)
                     var newp = $("<p>")
                     var newimg = $("<img>")
                     newimg.addClass("topicPicture")
@@ -57,14 +55,48 @@ $(document).ready(function(){
     $("button[type='submit']").click(function(e){
         e.preventDefault()
         var newquery = $("#addquery").val()
+        newquery = String(newquery)
         var newButton2 = $("<button>")
         topic.push(newquery);
-        newButton2.addClass("topicButton")
+        var datanum = topic.length - 1;
+        newButton2.attr("data-number",datanum)
+
+        .addClass("topicButton").bind("click",function(){
+            
+        var queryParam = {api_key: "19SOKo8StiKRg3T028H9ycDkZIe4Ssel"}
+        queryParam.q = $(this).text();
+        console.log(queryParam.q);
+        queryParam.limit = "10";
+        queryParam.rating = "g";
+        urlquery = "https://api.giphy.com/v1/gifs/search?"+$.param(queryParam);
+
+            $.ajax({
+                url: urlquery,
+                method: "GET",
+            }).then(function(response){
+
+                for(var j=0;j<response.data.length;j++){
+                    var imgsrcStill = response.data[j].images.original_still.url
+                    var imgsrcAnimate = response.data[j].images.original.url
+                    var imgRating = response.data[j].rating
+                    var newp = $("<p>")
+                    var newimg = $("<img>")
+                    newimg.addClass("topicPicture")
+                    .attr("src", imgsrcStill)
+                    .attr("width","300px")
+                    .attr("data-loop", false)
+                    .attr("data-still", imgsrcStill)
+                    .attr("data-animate",imgsrcAnimate);
+                    newp.append(newimg).append("<p class='text-center'> Rating: "+imgRating+"</p>");
+                    $("#picture").prepend(newp);
+                }
+            })  
+            
+    
+
+        })
         .text(newquery);
         $("#button").append(newButton2);
-        console.log(topic);
-
-        pullButton()
     })
 
     $("#refresh").click(function(){
@@ -76,7 +108,6 @@ $(document).ready(function(){
         var imgStill = $(this).attr("data-still");
         var imgAnimate = $(this).attr("data-animate");
         console.log(loopCheck)
-        console.log(imgAnimate+imgStill)
         //Stop
         if(loopCheck === "false"){
             $(this).attr("src", imgAnimate)
