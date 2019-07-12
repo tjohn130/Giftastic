@@ -7,25 +7,26 @@
     <!--Stylesheet-->
     <link rel="stylesheet" type="text/css" href="./asset/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./asset/css/style.css">
-    <!--Bootscrapt-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <!--Bootscrapt-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Giftastic</title>
 </head>
 <body>
-    <div>
-        <div class="float-right text-center" id="button"></div>
-        <div class="float-left" id="picture"></div>
-    </div>
-    <div class="container">
-        <form class="float-right">
-            <div class="form-group">
-                <label for="addquery">New Query</label>
-                <input type="text" class="form-control" id="addquery" placeholder="Add a query">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="container-fluid row">
+        <div id="picture"></div>
+        <div class="float-right">
+            <form>
+                <div class="form-group">
+                    <label for="addquery">New Query</label>
+                    <input type="text" class="form-control" id="addquery" placeholder="Add a query">
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button id="refresh" class="btn btn-info">Refresh</button>
+            </form>
+            <div class="text-center" id="button"></div>
+        </div>
     </div>
     <!--Javascript-->
     <script type="text/javascript" src="./asset/javascript/app.js"></script>
