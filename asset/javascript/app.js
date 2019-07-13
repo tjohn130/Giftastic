@@ -6,6 +6,7 @@ $(document).ready(function(){
         $("#button").empty();
         for (var i=0;i<topic.length;i++){
             var newButton = $("<button>")
+
             newButton.attr("data-number", i)
             .addClass("topicButton")
             .text(topic[i]);
@@ -17,9 +18,14 @@ $(document).ready(function(){
     $(".topicButton").click(function(){
         //Builds the query search
         var queryParam = {api_key: "19SOKo8StiKRg3T028H9ycDkZIe4Ssel"}
+        var addRating = $("input:radio[name='addrating']:checked").val()
+        var addLimit = $("[name='addlimit']").val()
+
+        addLimit = String(addLimit)
+        addRating = String(addRating)
         queryParam.q = $(this).text();
-        queryParam.limit = "10";
-        queryParam.rating = "g";
+        queryParam.limit = addLimit;
+        queryParam.rating = addRating;
         urlquery = "https://api.giphy.com/v1/gifs/search?"+$.param(queryParam);
         //API Call
         $.ajax({
@@ -49,16 +55,21 @@ $(document).ready(function(){
     $("button[type='submit']").click(function(e){
         e.preventDefault()
         var newquery = $("#addquery").val()
-        newquery = String(newquery)
         var newButton2 = $("<button>")
-        topic.push(newquery);
         var datanum = topic.length - 1;
+        var addRating = $("input:radio[name='addrating']:checked").val()
+        var addLimit = $("[name='addlimit']").val()
+
+        addLimit = String(addLimit)
+        addRating = String(addRating)
+        newquery = String(newquery)
+        topic.push(newquery);
         newButton2.attr("data-number",datanum)
         .addClass("topicButton").bind("click",function() {
             var queryParam = {api_key: "19SOKo8StiKRg3T028H9ycDkZIe4Ssel"}
             queryParam.q = $(this).text();
-            queryParam.limit = "10";
-            queryParam.rating = "g";
+            queryParam.limit = addLimit;
+            queryParam.rating = addRating;
             urlquery = "https://api.giphy.com/v1/gifs/search?"+$.param(queryParam);
             $.ajax({
                 url: urlquery,
